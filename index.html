@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bot Legal Pages</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: #f5f7fa;
+      color: #333;
+    }
+
+    header {
+      background-color: #2c3e50;
+      padding: 20px 30px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8em;
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+
+    nav button {
+      background: #3498db;
+      border: none;
+      padding: 10px 18px;
+      color: white;
+      margin: 5px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    nav button.active {
+      background-color: #2980b9;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .accordion {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .accordion-header {
+      padding: 18px 20px;
+      background-color: #3498db;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .accordion-header:hover {
+      background-color: #2980b9;
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 20px;
+      background: white;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+
+    .accordion-content.open {
+      max-height: 500px;
+      padding: 20px;
+    }
+
+    footer {
+      text-align: center;
+      background-color: #ecf0f1;
+      padding: 20px;
+      font-size: 0.9em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Bot Legal Center</h1>
+  <nav>
+    <button id="tosTab" class="active">Terms of Service</button>
+    <button id="privacyTab">Privacy Policy</button>
+  </nav>
+</header>
+
+<main>
+  <!-- Terms of Service Section -->
+  <section id="tosSection">
+    <div class="accordion">
+      <div class="accordion-header">1. Acceptance of Terms</div>
+      <div class="accordion-content">
+        <p>By using this Discord bot, you agree to these Terms of Service. If you disagree, do not use the bot.</p>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header">2. Features & Usage</div>
+      <div class="accordion-content">
+        <ul>
+          <li>YouTube music playback</li>
+          <li>AI responses via OpenRouter</li>
+          <li>Welcome messages and slash commands</li>
+        </ul>
+        <p>Do not use the bot for illegal or harmful activity.</p>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header">3. Data Collection & Privacy</div>
+      <div class="accordion-content">
+        <p>We only store essential data for bot functionality. AI queries are sent to 3rd-party APIs. Avoid sharing personal data.</p>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header">4. Termination</div>
+      <div class="accordion-content">
+        <p>We may terminate access at any time for violations or misuse.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy Policy Section -->
+  <section id="privacySection" style="display: none;">
+    <div class="accordion">
+      <div class="accordion-header">1. What We Collect</div>
+      <div class="accordion-content">
+        <p>We store server-specific settings (e.g., welcome channels), but not messages or user data.</p>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header">2. AI & Third-Party Services</div>
+      <div class="accordion-content">
+        <p>When you use <code>/ask</code>, the content is forwarded to OpenRouter for processing. No message content is stored by us.</p>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header">3. Data Security</div>
+      <div class="accordion-content">
+        <p>Data is stored locally and not shared. We do not sell, lease, or expose user or server info to external parties.</p>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header">4. Contact</div>
+      <div class="accordion-content">
+        <p>Contact us at <a href="mailto:support@example.com">support@example.com</a> for any privacy concerns.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 YourBotName. All rights reserved.
+</footer>
+
+<script>
+  const tosTab = document.getElementById('tosTab');
+  const privacyTab = document.getElementById('privacyTab');
+  const tosSection = document.getElementById('tosSection');
+  const privacySection = document.getElementById('privacySection');
+
+  const setActiveTab = (tab) => {
+    if (tab === 'privacy') {
+      tosSection.style.display = 'none';
+      privacySection.style.display = 'block';
+      tosTab.classList.remove('active');
+      privacyTab.classList.add('active');
+    } else {
+      privacySection.style.display = 'none';
+      tosSection.style.display = 'block';
+      privacyTab.classList.remove('active');
+      tosTab.classList.add('active');
+    }
+  };
+
+  const updateURL = (tab) => {
+    const newURL = `${window.location.pathname}?page=${tab}`;
+    history.pushState({ tab }, '', newURL);
+    setActiveTab(tab);
+  };
+
+  tosTab.onclick = () => updateURL('tos');
+  privacyTab.onclick = () => updateURL('privacy');
+
+  // Handle accordion toggles
+  document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+      header.nextElementSibling.classList.toggle('open');
+    });
+  });
+
+  // On load, handle query param
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const page = params.get('page');
+    if (page === 'privacy') {
+      setActiveTab('privacy');
+    } else {
+      setActiveTab('tos');
+    }
+  });
+
+  // Handle back/forward navigation
+  window.addEventListener('popstate', (e) => {
+    if (e.state?.tab) {
+      setActiveTab(e.state.tab);
+    }
+  });
+</script>
+
+</body>
+</html>
